@@ -108,7 +108,7 @@
             background-color: #d32f2f;
         }
 
-        #coinDisplay {  /* Стили для отображения монет */
+        #coinDisplay {
             position: fixed;
             top: 20px;
             right: 20px;
@@ -137,7 +137,7 @@
     <div class="container">
         <h1>Ваш Инвентарь</h1>
         <div class="inventory-grid" id="inventoryGrid">
-            </div>
+        </div>
         <p id="noItemsMessage" class="no-items-message">В вашем инвентаре пока нет предметов.</p>
         <div id="coinDisplay">  <span id="coinCount">500</span>
             <img src="coin.png" alt="Монета">
@@ -146,7 +146,7 @@
     <script>
         const inventoryGrid = document.getElementById("inventoryGrid");
         const noItemsMessage = document.getElementById("noItemsMessage");
-        const coinCountDisplay = document.getElementById("coinCount"); // Получаем элемент для отображения монет
+        const coinCountDisplay = document.getElementById("coinCount");
 
         // Цены предметов
         const itemPrices = {
@@ -154,12 +154,17 @@
             'Футы': 300,
             'Кимоно': 500,
             'Пояс': 100,
-            'Шлем': 100
+            'Шлем': 100,
+            'Брелок': 25,
+            'Тапки': 50,
+            'Футболка': 50,
+            'Шапка': 50,
+            'Сумка': 100
         };
 
         // Получаем данные инвентаря и баланс монет из localStorage
         let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
-        let coins = parseInt(localStorage.getItem("coins")) || 500;  // Начальное значение монет
+        let coins = parseInt(localStorage.getItem("coins")) || 500;
 
         function displayInventory() {
             if (inventory.length === 0) {
@@ -187,7 +192,7 @@
                     itemDiv.className = "inventory-item";
                     itemDiv.innerHTML = `
                         <img src="${item.image}" alt="${item.name}">
-                        <p>${item.name}</p>
+                        <p>${item.name} (${itemPrices[item.name]} монет)</p>
                         ${item.count > 1 ? `<span class="item-count">x${item.count}</span>` : ''}
                         <button class="sell-button" data-item-name="${item.name}">Продать</button>
                     `;
@@ -203,7 +208,7 @@
                     });
                 });
             }
-            updateCoinDisplay(); // Вызываем функцию для обновления отображения монет
+            updateCoinDisplay();
         }
 
         function sellItem(itemName) {
@@ -225,13 +230,7 @@
 
                 displayInventory();
             }
-        }
-
-        function addItemToInventory(item) {
-            let inventory = JSON.parse(localStorage.getItem("inventory")) || [];
-            inventory.push(item);
-            localStorage.setItem("inventory", JSON.stringify(inventory));
-            displayInventory();
+            updateCoinDisplay();
         }
 
         function updateCoinDisplay() {
@@ -240,7 +239,7 @@
             }
         }
 
-        displayInventory(); // Вызываем функцию для отображения инвентаря и монет при загрузке страницы
+        displayInventory();
     </script>
 </body>
 </html>

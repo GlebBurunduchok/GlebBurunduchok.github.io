@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CASE "AMUNITION" - 300 монет</title>
+    <title>CASE "ACCESSORIES" - 75 монет</title>
     <style>
         body, html {
             margin: 0;
@@ -128,11 +128,11 @@
     </style>
 </head>
 <body>
-    <a href="index.html" id="backButton">Назад</a>
+    <a href="cases.html" id="backButton">Назад</a>
     <div class="container">
-        <h1>CASE "AMUNITION" - 300 монет</h1>
+        <h1>CASE "ACCESSORIES" - 75 монет</h1>
         <div class="box" onclick="openBox()">
-            <img src="case_amunition.png" alt="Box">
+            <img src="case_accessories.png" alt="Box">
         </div>
         <div class="reward-container" id="rewardContainer">
             <div class="reward-line" id="rewardLine"></div>
@@ -140,18 +140,17 @@
         </div>
         <div class="reward-display" id="rewardDisplay"></div>
          <div id="coinDisplay">
-            <span id="coinCount">300</span>
+            <span id="coinCount">500</span>
             <img src="coin.png" alt="Монета">
         </div>
     </div>
-
     <script>
-        const rewards = [
-            { name: 'Перчатки', image: 'gloves.png', chance: 0.175 },
-            { name: 'Футы', image: 'foot_protection.png', chance: 0.175 },
-            { name: 'Кимоно', image: 'kimono.png', chance: 0.05 },
-            { name: 'Пояс', image: 'belt.png', chance: 0.3 },
-            { name: 'Шлем', image: 'helmet.png', chance: 0.3 }
+       const rewards = [
+            { name: 'Брелок', image: 'keychain.png', chance: 0.30, price: 25 },
+            { name: 'Тапки', image: 'slippers.png', chance: 0.19, price: 50  },
+            { name: 'Футболка', image: 'shirt.png', chance: 0.19, price: 50 },
+            { name: 'Шапка', image: 'hat.png', chance: 0.19, price: 50 },
+            { name: 'Сумка', image: 'bag.png', chance: 0.13, price: 100 }
         ];
 
         let isSpinning = false;
@@ -161,7 +160,7 @@
         const centerPosition = rewardContainerWidth / 2 - itemWidth / 2;
         let spinInterval;
         let coins = parseInt(localStorage.getItem("coins")) || 500;
-        const casePrice = 500;
+        const casePrice = 75;
 
         function openBox() {
             if (isSpinning) return;
@@ -187,7 +186,6 @@
                     extendedRewards.push(reward);
                 }
             });
-            // Перемешиваем порядок призов каждый раз
             extendedRewards.sort(() => Math.random() - 0.5);
              rewards.forEach(reward => {
                 const count = Math.round(reward.chance * 100);
@@ -201,6 +199,7 @@
                     extendedRewards.push(reward);
                 }
             });
+
             extendedRewards.forEach(reward => {
                 const item = document.createElement("div");
                 item.className = "reward-item";
@@ -233,7 +232,6 @@
 
                 requestAnimationFrame(animateSpin);
             }
-
             requestAnimationFrame(animateSpin);
         }
 
@@ -242,7 +240,6 @@
             inventory.push(item);
             localStorage.setItem("inventory", JSON.stringify(inventory));
         }
-
         function updateCoinDisplay() {
             const coinDisplay = document.getElementById("coinCount");
             if (coinDisplay) {
